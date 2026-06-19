@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XTernal Troubleshooting Guide</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --panel-bg: #161b22;
+            --text-main: #c9d1d9;
+            --accent: #238636;
+            --accent-hover: #2ea043;
+            --border: #30363d;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: var(--panel-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: #ffffff;
+        }
+
+        header p {
+            color: #8b949e;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 10px auto 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        h2.category {
+            font-size: 1.5rem;
+            color: var(--accent-hover);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+            margin-top: 50px;
+            margin-bottom: 20px;
+        }
+
+        .accordion {
+            background-color: var(--panel-bg);
+            color: #ffffff;
+            cursor: pointer;
+            padding: 18px 20px;
+            width: 100%;
+            border: 1px solid var(--border);
+            text-align: left;
+            outline: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            transition: 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion:hover, .active {
+            background-color: #1f242c;
+            border-color: #8b949e;
+        }
+
+        .accordion:after {
+            content: '\002B';
+            color: #8b949e;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .active:after {
+            content: "\2212";
+        }
+
+        .panel {
+            padding: 0 20px;
+            background-color: transparent;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            border-left: 2px solid var(--accent);
+            margin-left: 10px;
+            margin-bottom: 15px;
+        }
+
+        .panel-content {
+            padding: 15px 0 25px 0;
+        }
+
+        .panel-content p {
+            margin-top: 0;
+        }
+
+        .panel-content ol, .panel-content ul {
+            margin-top: 10px;
+            padding-left: 20px;
+        }
+
+        .panel-content li {
+            margin-bottom: 8px;
+        }
+
+        code {
+            background-color: rgba(110,118,129,0.4);
+            padding: 2px 6px;
+            border-radius: 6px;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+            font-size: 0.9em;
+        }
+
+        .img-placeholder {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            margin-top: 15px;
+            background-color: #161b22;
+            text-align: center;
+            font-style: italic;
+            color: #8b949e;
+        }
+
+        /* Replace this style with standard img tag logic when you have real images */
+        .img-placeholder-box {
+            border: 2px dashed #30363d;
+            padding: 40px;
+            text-align: center;
+            border-radius: 6px;
+            margin-top: 15px;
+            color: #8b949e;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>XTernal Troubleshooting</h1>
+        <p>Select the error you are experiencing below to reveal the step-by-step fix.</p>
+    </header>
+
+    <div class="container">
+
+        <h2 class="category">Installation & Update Errors</h2>
+
+        <button class="accordion">The Infinite Update Loop (v0.2.43)</button>
+        <div class="panel">
+            <div class="panel-content">
+                <p><strong>The Issue:</strong> The macro asks you to update, downloads the files, but always launches the old version again.</p>
+                <p><strong>The Fix:</strong> The GitHub link for the auto-updater is currently suspended, causing the download to silently fail. You must install the new version manually:</p>
+                <ol>
+                    <li>Delete your current XTernal folder completely. <em>(Your settings are saved safely elsewhere!)</em></li>
+                    <li>Download the newest <code>.zip</code> file provided in the Discord releases channel.</li>
+                    <li><strong>Right-click</strong> the downloaded <code>.zip</code> file and select <strong>Extract All...</strong></li>
+                    <li>Open the new extracted folder and run the macro directly from there.</li>
+                </ol>
+                <div class="img-placeholder-box">[Image: Right-click > Extract All context menu]</div>
+            </div>
+        </div>
+
+        <button class="accordion">"Script file not found" (Main.ahk is missing)</button>
+        <div class="panel">
+            <div class="panel-content">
+                <p><strong>The Issue:</strong> You try to run the macro, but Windows says the script file is missing or cannot be found.</p>
+                <p><strong>The Fix:</strong></p>
+                <ol>
+                    <li><strong>Extract properly:</strong> Ensure you extracted the <code>.zip</code> file. Running the macro while it is still trapped inside the compressed zip folder will cause it to crash.</li>
+                    <li><strong>Check Windows Defender:</strong> Antivirus software often mistakes memory-reading macros for viruses. Open <strong>Windows Security > Protection History</strong>, find the recently blocked threat, and select <strong>Restore</strong> or <strong>Allow on device</strong>.</li>
+                </ol>
+            </div>
+        </div>
+
+        <button class="accordion">"Error at Line 1: PK [Rectangles]"</button>
+        <div class="panel">
+            <div class="panel-content">
+                <p><strong>The Issue:</strong> You get a weird popup showing "PK" and a bunch of strange rectangle symbols.</p>
+                <p><strong>The Fix:</strong> This happens if you accidentally download the <code>.zip</code> update file and try to rename it to an <code>.ahk</code> file to force it to run.</p>
+                <ol>
+                    <li>Delete the broken file you renamed.</li>
+                    <li>Download a fresh <code>.zip</code> from the release channel.</li>
+                    <li>Right-click the <code>.zip</code>, select <strong>Extract All...</strong>, and run the real <code>Main.ahk</code> script inside the new folder.</li>
+                </ol>
+                <div class="img-placeholder-box">[Image: The Line 1 error box]</div>
+            </div>
+        </div>
+
+        <button class="accordion">"Failed to load settings: Item has no value"</button>
+        <div class="panel">
+            <div class="panel-content">
+                <p><strong>The Issue:</strong> The macro's settings file got wiped blank by a PC crash, power loss, or forced closure.</p>
+                <p><strong>The Fix:</strong> Delete the broken file so the macro can build a fresh one.</p>
+                <ol>
+                    <li>Press <strong>Windows Key + R</strong> to open the Run box.</li>
+                    <li>Type <code>%appdata%\OpenMacro\XTernal</code> and hit Enter.</li>
+                    <li>Delete the <strong>settings.json</strong> file.</li>
+                    <li>Restart the macro. It will automatically create a healthy settings file!</li>
+                </ol>
+            </div>
+        </div>
+
+        <h2 class="category">Connection & Roblox Errors</h2>
+
+        <button class="accordion">"Not in a game yet" / PID: ---</button>
+        <div class="panel">
+            <div class="panel-content">
+                <p><strong>The Issue:</strong> The macro cannot read your game's memory to see that you have spawned in.</p>
+                <p><strong>The Fix:</strong></p>
+                <ul>
+                    <li><strong>Run as Administrator:</strong> Close the macro, right-click the file, and select <strong>Run as Administrator</strong> to bypass Windows security blocks.</li>
+                    <li><strong>Use the Web Version:</strong> The macro <strong>will not work</strong> on the Microsoft Store or Xbox App versions of Roblox. Launch the game directly from your web browser (roblox.com).</li>
+                    <li><strong>Force Reconnect:</strong> Click into your game so your character can move, and press <strong>F3</strong> to force the macro to reconnect.</li>
+                </ul>
+            </div>
+        </div>
+
+        <button class="accordion">"Failed to open process (Error 5)"</button>
+        <div class="panel">
+            <div class="panel-content">
+                <p><strong>The Issue:</strong> Error 5 translates directly to "Access Denied." Windows is actively blocking the macro from looking inside Roblox.</p>
+                <p><strong>The Fix:</strong> Close the macro entirely. Right-click the macro file and select <strong>Run as Administrator</strong>.</p>
+            </div>
+        </div>
+
+        <button class="accordion">"Version check failed (error=31)"</button>
+        <div class="panel">
+            <div class="panel-content">
+                <p><strong>The Issue:</strong> Error 31 means your computer is still launching a hidden Microsoft Store or Xbox version of Roblox, which the macro cannot read.</p>
+                <p><strong>The Fix:</strong></p>
+                <ol>
+                    <li>Open Roblox normally and press <code>Ctrl + Shift + Esc</code> to open Task Manager.</li>
+                    <li>Find Roblox, right-click it, and select <strong>Open file location</strong>.</li>
+                    <li>If the folder path says <code>WindowsApps</code>, delete the shortcut you used to launch it. Go directly to <strong>roblox.com</strong> and install the browser version.</li>
+                </ol>
+            </div>
+        </div>
+
+        <h2 class="category">Minigame & Fishing Glitches</h2>
+
+        <button class="accordion">The Bar is "Crazy" or Overshoots the Fish</button>
+        <div class="panel">
+            <div class="panel-content">
+                <p><strong>The Issue:</strong> The minigame starts, but the white bar flings way past the fish and instantly fails.</p>
+                <p><strong>The Fix:</strong> The macro calculates fish movement based on your frame rate. If your game stutters or lags, the macro over-corrects. Optimize your PC:</p>
+                <ol>
+                    <li>In Roblox, set your <strong>Graphics Quality</strong> to 1 and zoom your camera all the way in to boost FPS.</li>
+                    <li>Turn off the macro's live stat overlay (the transparent black window) to save processing power.</li>
+                    <li>Open the macro <strong>Settings > Adjustments</strong>, lower your <strong>Prediction Strength</strong> (try 3.0), lower <strong>Proportional Gain</strong> (try 0.30), and increase <strong>Velocity Damping</strong> (try 45).</li>
+                </ol>
+                <div class="img-placeholder-box">[Image: The Adjustments/Settings menu with the recommended numbers]</div>
+            </div>
+        </div>
+
+        <button class="accordion">The Bar Does Not Move At All (Stuck Left)</button>
+        <div class="panel">
+            <div class="panel-content">
+                <p><strong>The Issue:</strong> The macro hooks the fish, but refuses to pull the bar to the right.</p>
+                <p><strong>The Fix:</strong> Your mouse inputs are being hijacked or your screen math is broken.</p>
+                <ol>
+                    <li><strong>Unplug Controllers:</strong> Unplug any Xbox/PlayStation controllers or racing wheels. Roblox prioritizes them over the macro's simulated clicks.</li>
+                    <li><strong>Fix Display Scaling:</strong> Right-click your Windows Desktop and select <strong>Display Settings</strong>. Make sure <strong>Scale and layout</strong> is exactly <strong>100%</strong>. Anything higher breaks the screen math.</li>
+                </ol>
+            </div>
+        </div>
+
+        <button class="accordion">The Click Drops Midway Through a Catch</button>
+        <div class="panel">
+            <div class="panel-content">
+                <p><strong>The Issue:</strong> The macro fights the fish perfectly, but suddenly gives up and lets the bar fall.</p>
+                <p><strong>The Fix:</strong></p>
+                <ul>
+                    <li><strong>CPU Overload:</strong> If your laptop hits 100% CPU usage during a chaotic moment, Windows briefly freezes the macro, dropping the mouse click. Close all background apps like Discord or Spotify.</li>
+                    <li><strong>Standard Rod:</strong> Make sure you are not using an enchanted rod (like Swift or Resilience). Enchantments change the physics of the minigame and can break the macro's math. Try a standard Flimsy or Plastic rod first.</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                } 
+            });
+        }
+    </script>
+
+</body>
+</html>
